@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{%block title%} {{ item.name }} {%endblock%}
+
+
+{% block content%}
+<div class="grid grid-cols-2 p-5">
+    <div class="col-span-1 p-5 grid grid-cols-1 gap-3">
+        <div class="flex items-right justify-right">
+            <img src="{{ item.image.url }}" alt="" class="rounded-xl max-h-96 min-h-50 h-96">
+        </div>
+        <span>You might like:</span>
+        <div class="flex  items-center">
+            {% for r in related_items %}
+            <div class="p-2">
+                <img src="{{ r.image.url }}" alt="" class="min-w-10 max-w-20 w-28 h-[50%]">
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+    <div class="col-span-1 flex flex-col justify-center">
+        <div>
+            <h1 class="text-xl font-semibold">{{ item.name }}</h1>
+            <span>${{ item.price }}</span>
+            <p class="text-justify mr-5 mt-3">{{ item.description }}</p>
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="bg-gray-300 inline-block p-6 rounded-lg space-x-2">
+            <a href="{% url 'item:delete' item.id %}" class="bg-red-500 px-2 py-1 rounded-md text-sm text-white">
+                Delete
+            </a>
+            <a href="{% url 'item:edit' item.id %}" class="bg-green-500 px-2 py-1 rounded-md text-sm text-white">
+                Edit
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

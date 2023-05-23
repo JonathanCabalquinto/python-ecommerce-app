@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+New Iten
+{% endblock %}
+
+{% block content %}
+<div class="w-1/2 bg-gray-100 my-6 mx-auto p-6 rounded-xl">
+    <h1 class="text-md text-gray-600 font-semibold">New Item</h1>
+    <form action="." method="post" enctype="multipart/form-data" class="space-y-3 text-gray-500 text-sm">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {{ form.as_p }}
+        </div>
+        {% if form.errors or form.non_field_errors %}
+        <div class="mb-3 p-6 bg-red-100 rounded-xl">
+            {% for field in form.errors %}
+            {{ field.errors }}
+            {% endfor %}
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <button class="mt-4 hover:bg-blue-700 bg-blue-500 text-md font-semibold px-2 py-1 rounded-md text-white">
+            Save
+        </button>
+    </form>
+</div>
+{% endblock %}
